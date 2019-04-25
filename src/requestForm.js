@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 //import { validateDate, validateNumber, validateText } from './validate';
 import moment from 'moment';
+//eslint-disable-next-line
 import * as businessDiff from 'moment-business-days';
-const RequestForm = ({ request, touched, handleChange, onAdd, handleBlur, setAllTouched }) => {
+const RequestForm = ({ success, setSuccess, request, touched, handleChange, onAdd, handleBlur, setAllTouched }) => {
 	useEffect(() => {
 		validateForm(request);
 	}, [request, touched]);
@@ -39,7 +41,10 @@ const RequestForm = ({ request, touched, handleChange, onAdd, handleBlur, setAll
 		setAllTouched();
 		if (typeMsg || startDateMsg || descriptionMsg || endDateMsg) {
 			console.log('invalid');
-		} else console.log('valid');
+		} else {
+			request.year = moment(request.startDate, 'M/D/YYYY', true).year();
+			onAdd(request);
+		}
 	};
 
 	return (
@@ -100,6 +105,17 @@ const RequestForm = ({ request, touched, handleChange, onAdd, handleBlur, setAll
 			</Form>
 
 			{numDays > 0 && <div>Your vacation is {numDays} days long.</div>}
+			{success && (
+				<Alert
+					variant="success"
+					dismissible
+					onClose={() => {
+						setSuccess(false);
+					}}
+				>
+					Your request was added successfully.
+				</Alert>
+			)}
 		</div>
 	);
 };
