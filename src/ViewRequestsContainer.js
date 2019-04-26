@@ -14,13 +14,12 @@ const ViewRequestContainer = () => {
 
 	useEffect(() => {
 		console.log(`year=${year}`);
-		firebase.db
+		const unsubscribe = firebase.db
 			.collection('requests')
 			.where('uid', '==', user ? user.uid : '')
 			.where('year', '==', parseInt(year))
 			.orderBy('startDate')
-			.get()
-			.then(data => {
+			.onSnapshot(data => {
 				//console.log(data);
 				const list = [];
 				data.forEach(doc => {
@@ -31,10 +30,11 @@ const ViewRequestContainer = () => {
 				});
 
 				setReqList(list);
-			})
-			.catch(e => {
-				console.log(e);
 			});
+		//.catch(e => {
+		//console.log(e);
+		//});
+		return unsubscribe;
 	}, [user, year]);
 
 	return (

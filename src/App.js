@@ -14,6 +14,7 @@ const App = () => {
 	const firebase = useContext(FirebaseContext);
 	//eslint-disable-next-line
 	const { init, user } = useAuthState(firebase.auth);
+	console.log('app rendering.');
 	return (
 		<div className="App">
 			<Router>

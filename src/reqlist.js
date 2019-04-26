@@ -35,18 +35,20 @@ const ReqList = ({ reqList }) => {
 			</table>
 			<h1>Totals</h1>
 			<table>
-				<tr>
-					<td>Sick</td>
-					<td>{totals.totalSick}</td>
-				</tr>
-				<tr>
-					<td>Personal</td>
-					<td>{totals.totalPersonal}</td>
-				</tr>
-				<tr>
-					<td>Vacation</td>
-					<td>{totals.totalVacation}</td>
-				</tr>
+				<tbody>
+					<tr>
+						<td>Sick</td>
+						<td>{totals.totalSick}</td>
+					</tr>
+					<tr>
+						<td>Personal</td>
+						<td>{totals.totalPersonal}</td>
+					</tr>
+					<tr>
+						<td>Vacation</td>
+						<td>{totals.totalVacation}</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 	);
