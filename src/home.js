@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
-import { FirebaseContext } from './firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
+
+import UserContext from './userContext';
+
 const Home = () => {
-	const firebase = useContext(FirebaseContext);
-	//eslint-disable-next-line
-	const { init, user } = useAuthState(firebase.auth);
+	const user = useContext(UserContext);
 
 	console.log('running');
 	return (

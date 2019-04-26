@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import UserContext from './userContext';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { FirebaseContext } from './firebase';
 
@@ -12,18 +13,20 @@ import SignIn from './signin';
 
 const App = () => {
 	const firebase = useContext(FirebaseContext);
-	//eslint-disable-next-line
-	const { init, user } = useAuthState(firebase.auth);
+
+	const { user } = useAuthState(firebase.auth);
 	console.log('app rendering.');
 	return (
 		<div className="App">
-			<Router>
-				<Navigation user={user} />
-				<Route path="/" exact component={Home} />
-				<Route path="/signin" component={SignIn} />
-				<Route path="/requests/add" component={RequestContainer} />
-				<Route path="/requests/view" component={ViewRequestContainer} />
-			</Router>
+			<UserContext.Provider value={user}>
+				<Router>
+					<Navigation user={user} />
+					<Route path="/" exact component={Home} />
+					<Route path="/signin" component={SignIn} />
+					<Route path="/requests/add" component={RequestContainer} />
+					<Route path="/requests/view" component={ViewRequestContainer} />
+				</Router>
+			</UserContext.Provider>
 		</div>
 	);
 };

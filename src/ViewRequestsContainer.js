@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
+import UserContext from './userContext';
 import ReqList from './reqlist';
 import { FirebaseContext } from './firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
 const ViewRequestContainer = () => {
 	const firebase = useContext(FirebaseContext);
-	//eslint-disable-next-line
-	const { init, user } = useAuthState(firebase.auth);
+
+	const user = useContext(UserContext);
 
 	const [reqList, setReqList] = useState([]);
 
