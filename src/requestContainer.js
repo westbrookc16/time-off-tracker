@@ -3,8 +3,8 @@ import moment from 'moment';
 import RequestForm from './requestForm';
 import { FirebaseContext } from './firebase';
 //import { validateText, validateNumber, validateDate } from './validate';
-import { useAuthState } from 'react-firebase-hooks/auth';
-
+//import { useAuthState } from 'react-firebase-hooks/auth';
+import UserContext from './userContext';
 const RequestContainer = () => {
 	const [request, setRequest] = useState({ numDays: '0', startDate: '', endDate: '', description: '', type: '' });
 	const [touched, setTouched] = useState({ startDate: false, endDate: false, description: false, type: false });
@@ -30,8 +30,8 @@ const RequestContainer = () => {
 		setTouched({ description: true, type: true, startDate: true, endDate: true });
 	};
 	const firebase = useContext(FirebaseContext);
-	//eslint-disable-next-line
-	const { init, user } = useAuthState(firebase.auth);
+
+const user			 = useContext(UserContext);
 	const handleChange = e => {
 		const { name, value } = e.target;
 		setRequest({ ...request, [name]: value });

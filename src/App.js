@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import UserContext from './userContext';
-import { useAuthState } from 'react-firebase-hooks/auth';
+//import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState } from './firebase-hooks';
 import { FirebaseContext } from './firebase';
 
 import './App.css';
@@ -14,7 +15,8 @@ import SignIn from './signin';
 const App = () => {
 	const firebase = useContext(FirebaseContext);
 
-	const { user } = useAuthState(firebase.auth);
+	const user = useAuthState(firebase.auth);
+
 	console.log('app rendering.');
 	return (
 		<div className="App">
