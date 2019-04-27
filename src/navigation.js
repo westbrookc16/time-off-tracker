@@ -16,6 +16,11 @@ const Navigation = ({ user, signOut, history }) => (
 			)}
 			{user && (
 				<li>
+					<Link to="/balances">Add/Edit Balances</Link>
+				</li>
+			)}
+			{user && (
+				<li>
 					<Link to="/requests/view">View Requests</Link>
 				</li>
 			)}

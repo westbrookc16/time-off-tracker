@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-const ReqList = ({ onCancel, selectedId, showModal, reqList, onDelete, onConfirm }) => {
+const ReqList = ({ onCancel, selectedId, showModal, reqList, onDelete, onConfirm, balance }) => {
 	let trs = [];
 
 	trs = reqList.map(data => {
@@ -54,17 +54,27 @@ const ReqList = ({ onCancel, selectedId, showModal, reqList, onDelete, onConfirm
 			)}
 			<h1>Totals</h1>
 			<table>
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Beginning Balance</th>
+						<th>Total Used</th>
+					</tr>
+				</thead>
 				<tbody>
 					<tr>
 						<td>Sick</td>
+						<td>{balance.sick}</td>
 						<td>{totals.totalSick}</td>
 					</tr>
 					<tr>
 						<td>Personal</td>
+						<td>{balance.personal}</td>
 						<td>{totals.totalPersonal}</td>
 					</tr>
 					<tr>
 						<td>Vacation</td>
+						<td>{balance.vacation}</td>
 						<td>{totals.totalVacation}</td>
 					</tr>
 				</tbody>

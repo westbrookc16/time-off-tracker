@@ -20,8 +20,20 @@ const ViewRequestContainer = () => {
 		setShowModal(true);
 		setSelectedId(id);
 	};
+	const deleteRequest = id => {
+		firebase.db
+			.collection('requests')
+			.doc(id)
+			.delete()
+			.then(u => {
+				setShowModal(false);
+			});
+	};
+	const closeModal = () => {
+		setShowModal(false);
+	};
+	const [balance, setBalance] = useState([]);
 	useEffect(() => {
-		console.log(`year=${year}`);
 		const unsubscribe = firebase.db
 			.collection('requests')
 			.where('uid', '==', user ? user.uid : '')
@@ -39,21 +51,17 @@ const ViewRequestContainer = () => {
 
 				setReqList(list);
 			});
-
+		//get balance
+		firebase.db
+			.collection('balances')
+			.doc(`${user.uid}${year}`)
+			.get()
+			.then(doc => {
+				if (doc.exists) setBalance(doc.data());
+				else setBalance({ vacation: 0, sick: 0, personal: 0 });
+			});
 		return unsubscribe;
 	}, [user, year]);
-	const deleteRequest = id => {
-		firebase.db
-			.collection('requests')
-			.doc(id)
-			.delete()
-			.then(u => {
-				setShowModal(false);
-			});
-	};
-	const closeModal = () => {
-		setShowModal(false);
-	};
 	return (
 		<div>
 			<label htmlFor="year">Year</label>
@@ -72,6 +80,7 @@ const ViewRequestContainer = () => {
 			<br />
 			<ReqList
 				reqList={reqList}
+				balance={balance}
 				onDelete={setModal}
 				showModal={showModal}
 				onConfirm={deleteRequest}
