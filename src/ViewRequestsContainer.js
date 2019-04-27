@@ -5,13 +5,21 @@ import { FirebaseContext } from './firebase';
 
 const ViewRequestContainer = () => {
 	const firebase = useContext(FirebaseContext);
-
+	const [showModal, setShowModal] = useState(false);
+	const [selectedId, setSelectedId] = useState('');
 	const user = useContext(UserContext);
 
 	const [reqList, setReqList] = useState([]);
 
 	const [year, setYear] = useState('2019');
+	useEffect(() => {
+		document.title = `View ${year} Requests`;
+	}, [year]);
 
+	const setModal = id => {
+		setShowModal(true);
+		setSelectedId(id);
+	};
 	useEffect(() => {
 		console.log(`year=${year}`);
 		const unsubscribe = firebase.db
@@ -31,12 +39,21 @@ const ViewRequestContainer = () => {
 
 				setReqList(list);
 			});
-		//.catch(e => {
-		//console.log(e);
-		//});
+
 		return unsubscribe;
 	}, [user, year]);
-
+	const deleteRequest = id => {
+		firebase.db
+			.collection('requests')
+			.doc(id)
+			.delete()
+			.then(u => {
+				setShowModal(false);
+			});
+	};
+	const closeModal = () => {
+		setShowModal(false);
+	};
 	return (
 		<div>
 			<label htmlFor="year">Year</label>
@@ -53,7 +70,14 @@ const ViewRequestContainer = () => {
 				<option>2021</option>
 			</select>
 			<br />
-			<ReqList reqList={reqList} />
+			<ReqList
+				reqList={reqList}
+				onDelete={setModal}
+				showModal={showModal}
+				onConfirm={deleteRequest}
+				onCancel={closeModal}
+				selectedId={selectedId}
+			/>
 		</div>
 	);
 };

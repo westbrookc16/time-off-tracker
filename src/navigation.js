@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-const Navigation = ({ user }) => (
+import Button from 'react-bootstrap/Button';
+import { Link, withRouter } from 'react-router-dom';
+const Navigation = ({ user, signOut, history }) => (
 	<div>
 		<ul>
 			{!user && (
@@ -18,7 +19,19 @@ const Navigation = ({ user }) => (
 					<Link to="/requests/view">View Requests</Link>
 				</li>
 			)}
+			{user && (
+				<li>
+					<Button
+						onClick={e => {
+							signOut();
+							history.push('/');
+						}}
+					>
+						Sign Out
+					</Button>
+				</li>
+			)}
 		</ul>
 	</div>
 );
-export default Navigation;
+export default withRouter(Navigation);

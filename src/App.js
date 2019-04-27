@@ -17,15 +17,15 @@ const App = () => {
 
 	const user = useAuthState(firebase.auth);
 
-	console.log('app rendering.');
 	return (
 		<div className="App">
 			<UserContext.Provider value={user}>
 				<Router>
-					<Navigation user={user} />
+					<Navigation user={user} signOut={firebase.signOut} />
 					<Route path="/" exact component={Home} />
 					<Route path="/signin" component={SignIn} />
 					<Route path="/requests/add" component={RequestContainer} />
+					<Route path="/requests/edit/:id" component={RequestContainer} />
 					<Route path="/requests/view" component={ViewRequestContainer} />
 				</Router>
 			</UserContext.Provider>

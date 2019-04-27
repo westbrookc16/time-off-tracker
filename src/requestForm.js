@@ -9,6 +9,9 @@ const RequestForm = ({ success, setSuccess, request, touched, handleChange, onAd
 	useEffect(() => {
 		validateForm(request);
 	}, [request, touched]);
+	useEffect(() => {
+		document.title = 'ad/Edit Request';
+	}, []);
 	const { type, startDate, endDate, description, numDays } = request;
 	const [startDateMsg, setStartDateMsg] = useState('');
 	const [endDateMsg, setEndDateMsg] = useState('');

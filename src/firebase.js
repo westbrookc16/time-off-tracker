@@ -31,6 +31,9 @@ class Firebase {
 			} else fallBack();
 		});
 	};
+	signOut = () => {
+		app.auth().signOut();
+	};
 }
 
 export default Firebase;
