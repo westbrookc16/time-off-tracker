@@ -6,7 +6,7 @@ const Navigation = ({ user, signOut, history }) => (
 		<ul>
 			{!user && (
 				<li>
-					<Link to="/signin">Sign Inn</Link>
+					<Link to="/signin">Sign In</Link>
 				</li>
 			)}
 			{user && (

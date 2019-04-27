@@ -17,20 +17,7 @@ class Firebase {
 		this.db = app.firestore();
 	}
 
-	authListener = (next, fallBack) => {
-		this.auth.onAuthStateChanged(authUser => {
-			if (authUser) {
-				const query = this.db.collection('users').where('uid', '==', authUser.uid);
-				query.get().then(snapShot => {
-					snapShot.forEach(doc => {
-						const dbUser = doc.data();
-						const newUser = { email: authUser.email, uid: authUser.uid, ...dbUser };
-						next(newUser);
-					});
-				});
-			} else fallBack();
-		});
-	};
+	
 	signOut = () => {
 		app.auth().signOut();
 	};
