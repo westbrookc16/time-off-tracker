@@ -10,7 +10,7 @@ const RequestForm = ({ success, setSuccess, request, touched, handleChange, onAd
 		validateForm(request);
 	}, [request, touched]);
 	useEffect(() => {
-		document.title = 'ad/Edit Request';
+		document.title = 'Add/Edit Request';
 	}, []);
 	const { type, startDate, endDate, description, numDays } = request;
 	const [startDateMsg, setStartDateMsg] = useState('');
@@ -67,6 +67,7 @@ const RequestForm = ({ success, setSuccess, request, touched, handleChange, onAd
 				<Form.Group controlId="startDate">
 					<Form.Label>Start Date</Form.Label>
 					<Form.Control
+						placeholder="mm/dd/yyyy"
 						type="text"
 						name="startDate"
 						onBlur={handleBlur}
@@ -81,6 +82,7 @@ const RequestForm = ({ success, setSuccess, request, touched, handleChange, onAd
 				<Form.Group controlId="endDate">
 					<Form.Label>End Date</Form.Label>
 					<Form.Control
+						placeHolder="mm/dd/yyyy"
 						onBlur={handleBlur}
 						type="text"
 						name="endDate"
