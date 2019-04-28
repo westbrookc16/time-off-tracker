@@ -1,9 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import UserContext from './firebase/UserContext';
 import ReqList from './ReqList';
 import { FirebaseContext } from './firebase/firebase';
 
 const ViewRequestContainer = () => {
+	const refYear = useRef(null);
 	const firebase = useContext(FirebaseContext);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedId, setSelectedId] = useState('');
@@ -62,10 +63,14 @@ const ViewRequestContainer = () => {
 			});
 		return unsubscribe;
 	}, [user, year]);
+	const setYearFocus = () => {
+		refYear.current.focus();
+	};
 	return (
 		<div>
 			<label htmlFor="year">Year</label>
 			<select
+				ref={refYear}
 				id="year"
 				name="year"
 				onChange={e => {
@@ -79,9 +84,10 @@ const ViewRequestContainer = () => {
 			</select>
 			<br />
 			<ReqList
+				setYearFocus={setYearFocus}
 				reqList={reqList}
 				balance={balance}
-				onDelete={setModal}
+				showDeleteModal={setModal}
 				showModal={showModal}
 				onConfirm={deleteRequest}
 				onCancel={closeModal}

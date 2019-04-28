@@ -3,13 +3,13 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-const ReqList = ({ onCancel, selectedId, showModal, reqList, onDelete, onConfirm, balance }) => {
+const ReqList = ({ setYearFocus, onCancel, selectedId, showModal, reqList, showDeleteModal, onConfirm, balance }) => {
 	const refModal = useRef(null);
-	const refHRequests = useRef(null);
+
 	useEffect(() => {
 		if (showModal) {
 			refModal.current.focus();
-		} else refHRequests.current.focus();
+		} else setYearFocus();
 	}, [showModal]);
 	let trs = [];
 
@@ -27,7 +27,7 @@ const ReqList = ({ onCancel, selectedId, showModal, reqList, onDelete, onConfirm
 					<button
 						onClick={e => {
 							e.preventDefault();
-							onDelete(data.id);
+							showDeleteModal(data.id);
 							console.log('deleting');
 						}}
 					>
@@ -43,7 +43,7 @@ const ReqList = ({ onCancel, selectedId, showModal, reqList, onDelete, onConfirm
 	});
 	return (
 		<div>
-			<h1 ref={refHRequests}>Requests</h1>
+			<h1>Requests</h1>
 			{reqList.length > 0 && (
 				<table>
 					<thead>
