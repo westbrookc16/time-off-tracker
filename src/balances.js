@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import { FirebaseContext } from './firebase';
-import userContext from './userContext';
+import { FirebaseContext } from './firebase/firebase';
+import userContext from './firebase/UserContext';
 const Balances = () => {
+	const refModal = useRef(null);
 	const [year, setYear] = useState('2019');
 	const [successMsg, setSuccessMsg] = useState('');
 	const [balance, setBalance] = useState({ personal: 0, sick: 0, vacation: 0, year: 2019 });
@@ -13,6 +14,13 @@ const Balances = () => {
 	const handleChange = e => {
 		setBalance({ ...balance, [e.target.name]: e.target.value });
 	};
+	//set modal to focus
+	useEffect(() => {
+		if (successMsg && refModal.current) {
+			console.log(refModal.current);
+			//refModal.current.focus();
+		}
+	}, [successMsg]);
 	useEffect(() => {
 		firebase.db
 			.collection('balances')
@@ -41,6 +49,7 @@ const Balances = () => {
 	return (
 		<div>
 			<h1>Add/Edit Balances</h1>
+			Enter your initial beginning balances for the year for future reference.
 			<Form onSubmit={handleSubmit}>
 				<Form.Group controlId="year">
 					<Form.Label>Year</Form.Label>
@@ -72,6 +81,8 @@ const Balances = () => {
 			</Form>
 			{successMsg && (
 				<Alert
+					ref={refModal}
+					tabIndex="-1"
 					dismissible
 					onClose={() => {
 						setSuccessMsg('');

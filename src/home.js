@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import UserContext from './userContext';
+import UserContext from './firebase/UserContext';
 
 const Home = () => {
 	const user = useContext(UserContext);

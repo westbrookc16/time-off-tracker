@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import UserContext from './userContext';
-import ReqList from './reqlist';
-import { FirebaseContext } from './firebase';
+import UserContext from './firebase/UserContext';
+import ReqList from './ReqList';
+import { FirebaseContext } from './firebase/firebase';
 
 const ViewRequestContainer = () => {
 	const firebase = useContext(FirebaseContext);

@@ -1,38 +1,39 @@
 import React, { useState, useContext, useEffect } from 'react';
 import moment from 'moment';
-import RequestForm from './requestForm';
-import { FirebaseContext } from './firebase';
+import RequestForm from './RequestForm';
+import { FirebaseContext } from './firebase/firebase';
 //import { validateText, validateNumber, validateDate } from './validate';
 //import { useAuthState } from 'react-firebase-hooks/auth';
-import UserContext from './userContext';
+import UserContext from './firebase/UserContext';
 
 const RequestContainer = props => {
 	const { id } = props.match.params;
-	const [reqId, setReqId] = useState('');
 
 	const firebase = useContext(FirebaseContext);
 
 	const user = useContext(UserContext);
 
-	const [request, setRequest] = useState({ numDays: '0', startDate: '', endDate: '', 	scription: '', type: '' });
+	const [request, setRequest] = useState({ numDays: '0', startDate: '', endDate: '', description: '', type: '' });
 	const [touched, setTouched] = useState({ startDate: false, endDate: false, description: false, type: false });
 	const [success, setSuccess] = useState(false);
 	const { startDate, endDate } = request;
-	if (id) {
-		useEffect(() => {
+
+	useEffect(() => {
+		if (id) {
 			firebase.db
 				.collection('requests')
 				.doc(id)
 				.get()
 				.then(doc => {
-					setReqId(id);
+					//setReqId(id);
 					let returnedDoc = { ...doc.data() };
 					returnedDoc.startDate = moment(returnedDoc.startDate.toDate()).format('M/D/YYYY');
 					returnedDoc.endDate = moment(returnedDoc.endDate.toDate()).format('M/D/YYYY');
 					setRequest(returnedDoc);
 				});
-		}, []);
-	}
+		}
+	}, [id]);
+
 	const calcDiff = (startDate, endDate) => {
 		let dStartDate = moment(startDate, 'M/D/YYYY', true);
 		let dEndDate = moment(endDate, 'M/D/YYYY', true);
@@ -62,7 +63,7 @@ const RequestContainer = props => {
 		request.displayName = user.displayName;
 		request.startDate = new Date(request.startDate);
 		request.endDate = new Date(request.endDate);
-		if (!reqId) {
+		if (!id) {
 			firebase.db
 				.collection('requests')
 				.add(request)
@@ -78,7 +79,7 @@ const RequestContainer = props => {
 		} else {
 			firebase.db
 				.collection('requests')
-				.doc(reqId)
+				.doc(id)
 				.set(request);
 			props.history.push('/requests/view');
 		}

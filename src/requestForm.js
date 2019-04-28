@@ -82,7 +82,7 @@ const RequestForm = ({ success, setSuccess, request, touched, handleChange, onAd
 				<Form.Group controlId="endDate">
 					<Form.Label>End Date</Form.Label>
 					<Form.Control
-						placeHolder="mm/dd/yyyy"
+						placeholder="mm/dd/yyyy"
 						onBlur={handleBlur}
 						type="text"
 						name="endDate"

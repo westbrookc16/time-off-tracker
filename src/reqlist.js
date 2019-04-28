@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 const ReqList = ({ onCancel, selectedId, showModal, reqList, onDelete, onConfirm, balance }) => {
+	const refModal = useRef(null);
+	const refHRequests = useRef(null);
+	useEffect(() => {
+		if (showModal) {
+			refModal.current.focus();
+		} else refHRequests.current.focus();
+	}, [showModal]);
 	let trs = [];
 
 	trs = reqList.map(data => {
@@ -36,7 +43,7 @@ const ReqList = ({ onCancel, selectedId, showModal, reqList, onDelete, onConfirm
 	});
 	return (
 		<div>
-			<h1>Requests</h1>
+			<h1 ref={refHRequests}>Requests</h1>
 			{reqList.length > 0 && (
 				<table>
 					<thead>
@@ -80,8 +87,8 @@ const ReqList = ({ onCancel, selectedId, showModal, reqList, onDelete, onConfirm
 				</tbody>
 			</table>
 			{showModal && (
-				<Modal.Dialog>
-					<Modal.Header closeButton>
+				<Modal.Dialog role="dialog" ref={refModal} tabIndex="-1">
+					<Modal.Header>
 						<Modal.Title>Delete Request </Modal.Title>
 					</Modal.Header>
 

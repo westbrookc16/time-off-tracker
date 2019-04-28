@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
-import Balances from './balances';
-import UserContext from './userContext';
-//import { useAuthState } from 'react-firebase-hooks/auth';
-import { useAuthState } from './firebase-hooks';
-import { FirebaseContext } from './firebase';
+import Balances from './Balances';
+import UserContext from './firebase/UserContext';
+
+import { useAuthState } from './firebase/firebase-hooks';
+import { FirebaseContext } from './firebase/firebase';
 
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Home from './home';
-import RequestContainer from './requestContainer';
+import Home from './Home';
+import RequestContainer from './RequestContainer';
 import ViewRequestContainer from './ViewRequestsContainer';
-import Navigation from './navigation';
-import SignIn from './signin';
+import Navigation from './Navigation';
+import SignIn from './SignIn';
 
 const App = () => {
 	const firebase = useContext(FirebaseContext);
