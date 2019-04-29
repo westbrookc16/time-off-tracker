@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-//import { validateDate, validateNumber, validateText } from './validate';
+
 import moment from 'moment';
 //eslint-disable-next-line
 import * as businessDiff from 'moment-business-days';
-const RequestForm = ({ success, setSuccess, request, touched, handleChange, onAdd, handleBlur, setAllTouched }) => {
+import 'react-dates/initialize';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+
+const RequestForm = ({
+	setDates,
+	success,
+	setSuccess,
+	request,
+	touched,
+	handleChange,
+	onAdd,
+	handleBlur,
+	setAllTouched,
+}) => {
+	const [focusedInput, setFocusedInput] = useState('');
 	useEffect(() => {
 		validateForm(request);
 	}, [request, touched]);
@@ -64,35 +79,20 @@ const RequestForm = ({ success, setSuccess, request, touched, handleChange, onAd
 						<Form.Control.Feedback type="invalid">{typeMsg}</Form.Control.Feedback>
 					)}
 				</Form.Group>
-				<Form.Group controlId="startDate">
-					<Form.Label>Start Date</Form.Label>
-					<Form.Control
-						placeholder="mm/dd/yyyy"
-						type="text"
-						name="startDate"
-						onBlur={handleBlur}
-						value={startDate}
-						onChange={handleChange}
-					/>
-					{startDateMsg && touched['startDate'] && (
-						<Form.Control.Feedback type="invalid">{startDateMsg}</Form.Control.Feedback>
-					)}
-				</Form.Group>
-
-				<Form.Group controlId="endDate">
-					<Form.Label>End Date</Form.Label>
-					<Form.Control
-						placeholder="mm/dd/yyyy"
-						onBlur={handleBlur}
-						type="text"
-						name="endDate"
-						onChange={handleChange}
-						value={endDate}
-					/>
-					{endDateMsg && touched['endDate'] && (
-						<Form.Control.Feedback type="invalid">{endDateMsg}</Form.Control.Feedback>
-					)}
-				</Form.Group>
+				<DateRangePicker
+					startDate={request.startDate ? moment(request.startDate) : null} // momentPropTypes.momentObj or null,
+					startDateId="startDate" // PropTypes.string.isRequired,
+					endDate={request.endDate ? moment(request.endDate) : null} // momentPropTypes.momentObj or null,
+					endDateId="endDate" // PropTypes.string.isRequired,
+					minimumNights="0"
+					onDatesChange={({ startDate, endDate }) => {
+						setDates(startDate, endDate);
+					}} // PropTypes.func.isRequired,
+					focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+					onFocusChange={focusedInput => {
+						setFocusedInput(focusedInput);
+					}} // PropTypes.func.isRequired,
+				/>
 				<Form.Group controlId="description">
 					<Form.Label>Description</Form.Label>
 					<Form.Control

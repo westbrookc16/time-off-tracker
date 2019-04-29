@@ -17,7 +17,9 @@ const RequestContainer = props => {
 	const [touched, setTouched] = useState({ startDate: false, endDate: false, description: false, type: false });
 	const [success, setSuccess] = useState(false);
 	const { startDate, endDate } = request;
-
+	const setDates = (startDate, endDate) => {
+		setRequest({ ...request, startDate: startDate, endDate: endDate });
+	};
 	useEffect(() => {
 		if (id) {
 			firebase.db
@@ -86,6 +88,7 @@ const RequestContainer = props => {
 	};
 	return (
 		<RequestForm
+			setDates={setDates}
 			success={success}
 			setSuccess={setSuccess}
 			request={request}
