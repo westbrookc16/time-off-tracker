@@ -27,7 +27,7 @@ const RequestForm = ({
 	useEffect(() => {
 		document.title = 'Add/Edit Request';
 	}, []);
-	const { type, description, numDays } = request;
+	const { type,  description, numDays } = request;
 	const [startDateMsg, setStartDateMsg] = useState('');
 	const [endDateMsg, setEndDateMsg] = useState('');
 	const [typeMsg, setTypeMsg] = useState('');

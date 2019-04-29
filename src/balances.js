@@ -1,26 +1,32 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { FirebaseContext } from './firebase/firebase';
 import userContext from './firebase/UserContext';
 const Balances = () => {
-	const refModal = useRef(null);
+	useEffect(() => {
+		document.title = 'add/Edit  Balances.';
+	}, []);
 	const [year, setYear] = useState('2019');
 	const [successMsg, setSuccessMsg] = useState('');
 	const [balance, setBalance] = useState({ personal: 0, sick: 0, vacation: 0, year: 2019 });
+	const [errors, setErrors] = useState([]);
 	const user = useContext(userContext);
 	const firebase = useContext(FirebaseContext);
+	const validateForm = balance => {
+		let errorMsgs = [];
+		const { personal, sick, vacation } = balance;
+		if (!personal) errorMsgs = errorMsgs.concat('You must enter a balance for Personal days.');
+		if (!vacation) errorMsgs = errorMsgs.concat('You must enter a balance for Vacation days.');
+		if (!sick) errorMsgs = errorMsgs.concat('You must enter a balance for Sick days.');
+		setErrors(errorMsgs);
+		return errorMsgs.length > 0 ? false : true;
+	};
 	const handleChange = e => {
 		setBalance({ ...balance, [e.target.name]: e.target.value });
 	};
-	//set modal to focus
-	useEffect(() => {
-		if (successMsg && refModal.current) {
-			console.log(refModal.current);
-			//refModal.current.focus();
-		}
-	}, [successMsg]);
+
 	useEffect(() => {
 		firebase.db
 			.collection('balances')
@@ -37,6 +43,7 @@ const Balances = () => {
 	const { personal, sick, vacation } = balance;
 	const handleSubmit = e => {
 		e.preventDefault();
+		if (!validateForm(balance)) return;
 		const { uid } = user;
 		firebase.db
 			.collection('balances')
@@ -46,6 +53,7 @@ const Balances = () => {
 				setSuccessMsg('Your balance was added successfully.');
 			});
 	};
+	const errorLis = errors.map((msg, i) => <li key={i}>{msg}</li>);
 	return (
 		<div>
 			<h1>Add/Edit Balances</h1>
@@ -81,7 +89,6 @@ const Balances = () => {
 			</Form>
 			{successMsg && (
 				<Alert
-					ref={refModal}
 					tabIndex="-1"
 					dismissible
 					onClose={() => {
@@ -90,6 +97,11 @@ const Balances = () => {
 					variant="success"
 				>
 					{successMsg}
+				</Alert>
+			)}
+			{errors.length > 0 && (
+				<Alert variant="danger">
+					<ul>{errorLis}</ul>
 				</Alert>
 			)}
 		</div>
