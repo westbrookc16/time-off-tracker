@@ -6,7 +6,7 @@ import moment from 'moment';
 //eslint-disable-next-line
 import * as businessDiff from 'moment-business-days';
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
 const RequestForm = ({
@@ -27,7 +27,7 @@ const RequestForm = ({
 	useEffect(() => {
 		document.title = 'Add/Edit Request';
 	}, []);
-	const { type, startDate, endDate, description, numDays } = request;
+	const { type, description, numDays } = request;
 	const [startDateMsg, setStartDateMsg] = useState('');
 	const [endDateMsg, setEndDateMsg] = useState('');
 	const [typeMsg, setTypeMsg] = useState('');
