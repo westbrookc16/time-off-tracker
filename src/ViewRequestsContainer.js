@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import UserContext from './firebase/UserContext';
 import ReqList from './ReqList';
-import { FirebaseContext } from './firebase/firebase';
+import FirebaseContext from './firebase/firebase';
 
 const ViewRequestContainer = () => {
 	const refYear = useRef(null);

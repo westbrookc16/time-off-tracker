@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { FirebaseContext } from './firebase/firebase';
+import FirebaseContext from './firebase/firebase';
 const SignIn = () => {
 	const fireBase = useContext(FirebaseContext);
 	const config = { signInOptions: [fireBase.emailProvider, fireBase.googleProvider], signInSuccessUrl: '/' };

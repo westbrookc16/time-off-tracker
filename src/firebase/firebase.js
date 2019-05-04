@@ -4,7 +4,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
-class Firebase {
+export class Firebase {
 	constructor() {
 		app.initializeApp(config);
 		console.log('app initialized');
@@ -17,11 +17,11 @@ class Firebase {
 		this.db = app.firestore();
 	}
 
-	
 	signOut = () => {
 		app.auth().signOut();
 	};
 }
 
-export default Firebase;
-export const FirebaseContext = React.createContext(null);
+//export default Firebase;
+const FirebaseContext = React.createContext(null);
+export default FirebaseContext;

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import moment from 'moment';
 import RequestForm from './RequestForm';
-import { FirebaseContext } from './firebase/firebase';
+import FirebaseContext from './firebase/firebase';
 //import { validateText, validateNumber, validateDate } from './validate';
 //import { useAuthState } from 'react-firebase-hooks/auth';
 import UserContext from './firebase/UserContext';

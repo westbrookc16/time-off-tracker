@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import { FirebaseContext } from './firebase/firebase';
+import FirebaseContext from './firebase/firebase';
 import userContext from './firebase/UserContext';
 const Balances = () => {
 	useEffect(() => {
